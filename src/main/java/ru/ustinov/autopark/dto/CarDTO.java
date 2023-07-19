@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Range;
@@ -12,16 +13,15 @@ import org.hibernate.validator.constraints.Range;
 import java.io.Serializable;
 
 /**
- * DTO for {@link ru.ustinov.autopark.entities.Car}
+ * DTO for {@link ru.ustinov.autopark.model.Car}
  */
 @Data
-@AllArgsConstructor
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CarDTO implements Serializable {
-   // @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private String brand;
-    //@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private String engine;
 
     @NotNull(message = "Заполните vin-code")

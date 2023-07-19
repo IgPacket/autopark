@@ -1,11 +1,8 @@
-package ru.ustinov.autopark.entities;
+package ru.ustinov.autopark.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
@@ -13,21 +10,22 @@ import org.hibernate.annotations.CascadeType;
 @Setter
 @Entity
 @Builder
-@Table(name = "bikes")
+@NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "bikes")
 public class Bike {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @Cascade(CascadeType.SAVE_UPDATE)
+    @ManyToOne()
+    @Cascade(CascadeType.MERGE)
     @JoinColumn(name = "brand_id")
     private Brand brand;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @Cascade(CascadeType.SAVE_UPDATE)
+    @ManyToOne()
+    @Cascade(CascadeType.MERGE)
     @JoinColumn(name = "engine_id")
     private Engine engine;
 
@@ -40,7 +38,5 @@ public class Bike {
         return "Марка: " + brand +
                 ", Тип двигателя: " + engine +
                 ", Год выпуска: " + manufactureYear;
-    }
-    public Bike() {
     }
 }

@@ -1,9 +1,11 @@
-package ru.ustinov.autopark.entities;
+package ru.ustinov.autopark.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.LinkedHashSet;
@@ -12,42 +14,33 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-@Table(name = "engines")
-public class Engine {
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "brands")
+public class Brand {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    //@JsonIgnore
     private Integer id;
 
-    @Size(max = 50)
+    @Size(max = 100)
     @NotNull
-    @Column(name = "engine", nullable = false, length = 50)
-    private String engine;
+    @Column(name = "brand", nullable = false, length = 100)
+    private String brand;
 
     @OneToMany(
-            fetch = FetchType.LAZY,
-            mappedBy = "engine",
-            cascade = CascadeType.ALL)
-    //@JsonIgnore
+            mappedBy = "brand",
+            cascade = CascadeType.ALL
+    )
     private Set<Bike> bikes = new LinkedHashSet<>();
 
     @OneToMany(
-            fetch = FetchType.LAZY,
-            mappedBy = "engine",
+            mappedBy = "brand",
             cascade = CascadeType.ALL)
-    //@JsonIgnore
     private Set<Car> cars = new LinkedHashSet<>();
-
-    public Engine() {
-    }
-
-    public Engine(String engine) {
-        this.engine = engine;
-    }
 
     @Override
     public String toString() {
-        return engine;
+        return brand;
     }
 }

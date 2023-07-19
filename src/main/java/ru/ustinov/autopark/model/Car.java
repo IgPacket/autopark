@@ -1,4 +1,4 @@
-package ru.ustinov.autopark.entities;
+package ru.ustinov.autopark.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -11,22 +11,22 @@ import org.hibernate.annotations.CascadeType;
 @Setter
 @Entity
 @Builder
-@Table(name = "cars")
+@NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "cars")
 public class Car {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @Cascade(CascadeType.SAVE_UPDATE)
+    @ManyToOne()
+    @Cascade(CascadeType.MERGE)
     @JoinColumn(name = "brand_id")
     private Brand brand;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @Cascade(CascadeType.SAVE_UPDATE)
+    @ManyToOne()
+    @Cascade(CascadeType.MERGE)
     @JoinColumn(name = "engine_id")
     private Engine engine;
 
@@ -45,9 +45,5 @@ public class Car {
                 ", Тип двигателя: " + engine +
                 ", Vin-code: " + vinCode + '\'' +
                 ", Год выпуска: " + manufactureYear;
-    }
-
-    public Car() {
-
     }
 }
